@@ -11,14 +11,15 @@ import FormInput from "./FormInput";
 import { Loader2 } from "lucide-react";
 import { authFormSchema } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { signIn, signUp } from "@/lib/actions/user.actions";
+import { SignUpParams } from "@/types";
 
 const AuthForm = ({ type }: { type: string }) => {
-  const formSchema = authFormSchema(type);
-
-  const [user, setUser] = useState<z.infer<typeof formSchema>>();
+  const [user, setUser] = useState<SignUpParams>();
   const [loading, setLoading] = useState(false);
 
-  const router = useRouter()
+  const router = useRouter();
+  const formSchema = authFormSchema(type);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -32,6 +33,7 @@ const AuthForm = ({ type }: { type: string }) => {
       lastName: "",
       postalCode: "",
       state: "",
+      city: "",
     },
   });
 
@@ -40,11 +42,16 @@ const AuthForm = ({ type }: { type: string }) => {
     setLoading(true);
     try {
       if (type === "signin") {
-        // communicate with server file
+        // communicate with server action
+        const resp = await signIn({
+          email: values.email,
+          password: values.password,
+        });
+        if (resp) router.push("/");
       }
       if (type === "signup") {
-        // setUser({});
-        router.push('/')
+        const user = await signUp(values);
+        setUser(user);
       }
     } catch (error) {
       console.log(error);

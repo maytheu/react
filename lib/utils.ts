@@ -199,13 +199,13 @@ export const authFormSchema = (type: string) =>
   z.object({
     email: z.string().email(),
     password: z.string().min(6),
-    firstName: type === "signup" ? z.string().optional() : z.string().min(3),
-    lastName: type === "signup" ? z.string().optional() : z.string().min(3),
-    address: type === "signup" ? z.string().optional() : z.string().max(100),
-    state: type === "signup" ? z.string().optional() : z.string().length(2),
+    firstName: type === "signin" ? z.string().optional() : z.string().min(3),
+    lastName: type === "signin" ? z.string().optional() : z.string().min(3),
+    address: type === "signin" ? z.string().optional() : z.string().max(100),
+    state: type === "signin" ? z.string().optional() : z.string().length(2),
     postalCode:
-      type === "signup" ? z.string().optional() : z.string().min(5).max(6),
-    dateOfBirth: type === "signup" ? z.string().optional() : z.string(),
-    bvn: type === "signup" ? z.string().optional() : z.string().length(11),
-    city: type === "signup" ? z.string().optional() : z.string(),
+      type === "signin" ? z.string().optional() : z.string().min(5).max(6),
+    dateOfBirth: type === "signin" ? z.string().optional() : z.string(),
+    bvn: type === "signin" ? z.string().optional() : z.string().length(11),
+    city: type === "signin" ? z.string().optional() : z.string(),
   });
