@@ -59,3 +59,14 @@ export async function getLoggedInUser() {
     return null;
   }
 }
+
+export const logoutUser = async () => {
+  try {
+    const { account } = await createSessionClient();
+
+    cookies().delete("bankify-session");
+    await account.deleteSession("current");
+  } catch (error) {
+    return null;
+  }
+};

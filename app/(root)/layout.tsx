@@ -1,17 +1,19 @@
 import MobileNav from "@/components/MobileNav";
 import Sidebar from "@/components/Sidebar";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
+import { User } from "@/types";
 import Image from "next/image";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = { firstName: "Mato", $id: "1", lastName: "Laue" };
+  const user: User = await getLoggedInUser();  
   return (
     <main className="h-screen w-full font-inter flex">
       <Sidebar user={user} />
-     
+
       {/* mobile view */}
       <div className="flex flex-col size-full">
         <div className="root-layout">

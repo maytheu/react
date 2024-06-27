@@ -1,15 +1,12 @@
 import Header from "@/components/Header";
 import RightSideBarHome from "@/components/RightSideBarHome";
 import TotalBalance from "@/components/TotalBalance";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
+import { User } from "@/types";
 import React from "react";
 
-const Home = () => {
-  const user = {
-    firstName: "Mato",
-    $id: "1",
-    lastName: "Laue",
-    email: "mato@laue.com",
-  };
+const Home = async () => {
+  const user: User = await getLoggedInUser();
 
   return (
     <section className="home">
@@ -19,7 +16,7 @@ const Home = () => {
             title="Welome"
             type="greeting"
             subtext="Manage and access Transaction efficiently"
-            user="Mato"
+            user={user?.name}
           />
           <TotalBalance
             accounts={[]}
